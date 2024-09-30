@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"],
+        select {
+            width: calc(50% - 10px);
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #buttons {
+            margin: 15px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Calculator</h1>
+        <input type="number" id="num1" placeholder="Enter first number" />
+        <input type="number" id="num2" placeholder="Enter second number" />
+        <select id="operation">
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select>
+        <div id="buttons">
+            <button id="calculate">Calculate</button>
+            <button id="clear">Clear</button>
+        </div>
+        <input id="result" disabled />
+    </div>
+
+    <script type="module">
+        // Addition and Subtraction Module
+        export function add(a, b) {
+            return a + b;
+        }
+
+        export function subtract(a, b) {
+            return a - b;
+        }
+
+        // Multiplication Module
+        export default function multiply(a, b) {
+            return a * b;
+        }
+
+        // Division Module
+        export default function divide(a, b) {
+            if (b === 0) {
+                throw new Error('Cannot divide by zero');
+            }
+            return a / b;
+        }
+
+        // Main Script
+        import { add, subtract } from './main.js'; // adjust for your server setup
+        import multiply from './main.js'; // adjust for your server setup
+        import divide from './main.js'; // adjust for your server setup
+
+        const calculateBtn = document.getElementById('calculate');
+        const clearBtn = document.getElementById('clear');
+        const resultField = document.getElementById('result');
+        const num1Field = document.getElementById('num1');
+        const num2Field = document.getElementById('num2');
+        const operation = document.getElementById('operation');
+
+        calculateBtn.addEventListener('click', () => {
+            const num1 = parseFloat(num1Field.value);
+            const num2 = parseFloat(num2Field.value);
+            let result;
+
+            try {
+                switch (operation.value) {
+                    case 'add':
+                        result = add(num1, num2);
+                        break;
+                    case 'subtract':
+                        result = subtract(num1, num2);
+                        break;
+                    case 'multiply':
+                        result = multiply(num1, num2);
+                        break;
+                    case 'divide':
+                        result = divide(num1, num2);
+                        break;
+                }
+                resultField.value = `Result: ${result}`;
+            } catch (error) {
+                resultField.value = `Error: ${error.message}`;
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            num1Field.value = '';
+            num2Field.value = '';
+            resultField.value = '';
+        });
+    </script>
+</body>
+</html>

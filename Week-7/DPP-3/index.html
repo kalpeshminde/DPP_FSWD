@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+</head>
+<body>
+    <h1>Task Management System</h1>
+
+    <script>
+        // 1. Task constructor function
+        function Task(title, description) {
+            this.title = title;
+            this.description = description;
+            this.completed = false;
+            this.subTasks = [];
+        }
+
+        // 2. Prototype method using 'this'
+        Task.prototype.complete = function() {
+            this.completed = true;
+            console.log(`Task "${this.title}" marked as completed.`);
+        };
+
+        // 3. Method to add subtask (using regular function for proper 'this' binding)
+        Task.prototype.addSubTask = function(subTaskTitle) {
+            const subTask = new Task(subTaskTitle, "");
+            this.subTasks.push(subTask);
+            console.log(`Subtask "${subTaskTitle}" added to "${this.title}".`);
+        };
+
+        // 4. TaskManager constructor function
+        function TaskManager() {
+            this.tasks = [];
+        }
+
+        // 5. Method to add a task
+        TaskManager.prototype.addTask = function(title, description) {
+            const task = new Task(title, description);
+            this.tasks.push(task);
+            console.log(`Task "${title}" added.`);
+            return task;
+        };
+
+        // 6. Anonymous function for event handling (simulated)
+        TaskManager.prototype.onTaskComplete = function(taskTitle) {
+            setTimeout(() => {
+                console.log(`Event: Task "${taskTitle}" has been completed!`);
+            }, 1000);
+        };
+
+        // 7. Recursive function to complete all tasks and subtasks
+        TaskManager.prototype.completeAllTasks = function(taskList) {
+            for (let i = 0; i < taskList.length; i++) {
+                taskList[i].complete();
+                if (taskList[i].subTasks.length > 0) {
+                    this.completeAllTasks(taskList[i].subTasks);
+                }
+            }
+        };
+
+        // 8. Pure function example
+        function getCompletedTaskCount(tasks) {
+            return tasks.filter(task => task.completed).length;
+        }
+
+        // 9. Impure function example
+        TaskManager.prototype.removeCompletedTasks = function() {
+            const initialLength = this.tasks.length;
+            this.tasks = this.tasks.filter(task => !task.completed);
+            console.log(`Removed ${initialLength - this.tasks.length} completed tasks.`);
+        };
+
+        // 10. Demonstrating 'this' behavior in different contexts
+        function demonstrateThis() {
+            const standalone = this.complete;
+            standalone(); // 'this' is undefined or global object in strict mode
+
+            const arrowFunction = () => {
+                console.log(this); // 'this' is lexically bound to the TaskManager context
+            };
+            arrowFunction();
+        }
+
+        // Usage example
+        const taskManager = new TaskManager();
+        const task1 = taskManager.addTask("Learn JavaScript", "Study advanced JS concepts");
+        task1.addSubTask("Understand 'this' keyword");
+        task1.addSubTask("Learn about closures");
+        const task2 = taskManager.addTask("Build a project", "Apply JS knowledge in a real project");
+
+        // Using the anonymous function for event handling
+        taskManager.onTaskComplete(task1.title);
+
+        // Complete all tasks (recursive function)
+        taskManager.completeAllTasks(taskManager.tasks);
+
+        // Using pure function
+        console.log("Completed tasks count:", getCompletedTaskCount(taskManager.tasks));
+
+        // Using impure function
+        taskManager.removeCompletedTasks();
+
+        // Demonstrate 'this' behavior
+        demonstrateThis.call(task1); // Calling it in the context of task1 to see the effects
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Tracker</title>
+</head>
+<body>
+    <h1>Library Book Tracker</h1>
+
+    <script>
+        // Step 1: Initialize Arrays
+        let books = [];
+        let statuses = [];
+
+        // Step 2: Prompt for Number of Books
+        let numberOfBooks = prompt("How many books do you want to track?");
+        numberOfBooks = Number(numberOfBooks);
+
+        // Step 3: Collect Book Titles and Initialize Statuses
+        for (let i = 0; i < numberOfBooks; i++) {
+            let bookTitle = prompt("Enter the title of book " + (i + 1) + ":");
+            books[i] = bookTitle;
+            statuses[i] = "Available"; // All books start as available
+        }
+
+        // Step 4: Display Initial List of Books
+        console.log("Library Book Tracker:");
+        for (let i = 0; i < numberOfBooks; i++) {
+            console.log(books[i] + ": " + statuses[i]);
+        }
+
+        // Step 5: Borrow or Return Books
+        let action;
+        while (true) {
+            action = prompt("Do you want to borrow or return a book? (borrow/return/exit)");
+            if (action === "exit") break;
+
+            let bookTitle = prompt("Enter the title of the book:");
+            let found = false;
+
+            // Use a for loop to find the book and update its status
+            for (let i = 0; i < numberOfBooks; i++) {
+                if (books[i] === bookTitle) {
+                    found = true;
+                    if (action === "borrow" && statuses[i] === "Available") {
+                        statuses[i] = "Borrowed";
+                        console.log(bookTitle + " has been borrowed.");
+                    } else if (action === "return" && statuses[i] === "Borrowed") {
+                        statuses[i] = "Available";
+                        console.log(bookTitle + " has been returned.");
+                    } else {
+                        console.log("Invalid action or the book is already in the desired state.");
+                    }
+                    break; // Exit the for loop once the book is found
+                }
+            }
+
+            if (!found) {
+                console.log("Book not found.");
+            }
+
+            // Step 6: Display Updated List of Books and their Statuses
+            console.log("Updated Library Book Tracker:");
+            for (let i = 0; i < numberOfBooks; i++) {
+                console.log(books[i] + ": " + statuses[i]);
+            }
+        }
+
+        // Step 7: Final Display Using do-while Loop
+        let index = 0;
+        console.log("Final Library Book Tracker:");
+        do {
+            console.log(books[index] + ": " + statuses[index]);
+            index++;
+        } while (index < numberOfBooks);
+    </script>
+</body>
+</html>

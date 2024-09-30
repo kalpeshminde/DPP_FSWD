@@ -1,0 +1,82 @@
+/* Universal Selector to reset margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Tagname Selectors for basic styling */
+body {
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* ID Selector for the footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Class Selectors */
+.main-content {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.sidebar {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.sidebar h3 {
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Grouping Selectors */
+h1, h2, h3, p {
+    margin-bottom: 15px;
+}
+
+/* Pseudo-selectors and Pseudo-classes */
+a:hover {
+    color: #FF6347;
+}
+
+/* Background Gradient */
+footer {
+    background: linear-gradient(to right, #333, #555);
+}
